@@ -15,6 +15,10 @@ void setup()
   pinMode(red_light_pin, OUTPUT);
   pinMode(green_light_pin, OUTPUT);
   pinMode(blue_light_pin, OUTPUT);
+  pinMode(2,OUTPUT);
+  pinMode(3,OUTPUT);
+  pinMode(4,OUTPUT);
+  pinMode(5,OUTPUT);
   Serial.begin(9600);
 }
 
@@ -60,7 +64,43 @@ void porta(){
       delay(10);
     }
      delay(6000);
+}
+
+void LuzDaCasa(){
+  int op;
+  
+  op = (Serial.read());
+  
+  Serial.println("1->quarto 1");
+  Serial.println("2->quarto 2");
+  Serial.println("3->quarto 3");
+  Serial.println("4->quarto 4");
+  Serial.println("5->Apagar todas luzes");
+
+  switch(op)
+  {
+    case '1':
+      digitalWrite(2,HIGH);    
+      break;
+    case '2':
+      digitalWrite(3,HIGH);
+      break;
+    case '3':
+      digitalWrite(4,HIGH);
+      break;
+    case '4':
+      digitalWrite(5,HIGH);
+      break;
+    case '5':
+      digitalWrite(2,LOW);
+      digitalWrite(3,LOW);
+      digitalWrite(4,LOW);
+      digitalWrite(5,LOW);
+      break;
+    default:
+      break;
   }
+}
 
 void loop()
 {
@@ -84,34 +124,33 @@ void loop()
          opcao = (Serial.read());
 
          switch(opcao){
-          Serial.println("switch2");
-          case '1':
-           //LuzDaCasa();
-           digitalWrite(13, HIGH);
-           Serial.println(opcao);
-           break;
-          case '2':
-           //LuzDaCasa();
-           digitalWrite(13, LOW);
-           Serial.println(opcao);
-           break;
-          case '3':
-           ledrgb();
-           break;
-          case '4':
-           porta();
-           Serial.println(opcao);
-           break;
-          case '5':
-           //Garagem();
-           break;
-          default:
-            break;
-          }         
-         
-         break;
-        default:
-          break;
+              Serial.println("switch2");
+              case '1':
+               LuzDaCasa();
+               Serial.println(opcao);
+               break;
+              case '2':
+               //LuzDaCasa();
+               digitalWrite(13, LOW);
+               Serial.println(opcao);
+               break;
+              case '3':
+               ledrgb();
+               break;
+              case '4':
+               porta();
+               Serial.println(opcao);
+               break;
+              case '5':
+               //Garagem();
+               break;
+              default:
+                break;
+              }         
+             
+             break;
+            default:
+              break;
       }
   }
 }
