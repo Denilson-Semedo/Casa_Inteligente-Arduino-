@@ -6,9 +6,12 @@ int blue_light_pin = 9;
 
 char op;
 char opcao;
+float temperatura;
 
 void setup()
 {
+  pinMode(10,OUTPUT);
+  digitalWrite(10,LOW);
   pinMode(13, OUTPUT);
   servo.attach(8);
   servo.write(0);
@@ -67,15 +70,15 @@ void porta(){
 }
 
 void LuzDaCasa(){
-  int op;
-  
-  op = (Serial.read());
-  
   Serial.println("1->quarto 1");
   Serial.println("2->quarto 2");
   Serial.println("3->quarto 3");
   Serial.println("4->quarto 4");
   Serial.println("5->Apagar todas luzes");
+
+  int op;
+  
+  op = (Serial.read());
 
   switch(op)
   {
@@ -104,6 +107,10 @@ void LuzDaCasa(){
 
 void loop()
 {
+  temperatura = (float(analogRead(A0))*5/(1023))/0.01;
+  if(temperatura > 40){
+    digitalWrite(10,HIGH);
+  }
   if (Serial.available())
 
   {
